@@ -1,0 +1,6 @@
+.env
+__pycache__/
+venv/
+events_dict.json
+user_agents.txt
+digest.txt
