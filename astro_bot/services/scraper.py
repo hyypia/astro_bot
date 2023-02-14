@@ -16,6 +16,7 @@ def generate_user_agents() -> dict:
         user_agents = file.read().splitlines()
         random_user_agent = random.choice(user_agents)
         headers = {"user-agent": random_user_agent}
+
         return headers
 
 

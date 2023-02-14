@@ -9,7 +9,7 @@ from aiogram.utils.markdown import hbold
 
 import templates
 from config import TOKEN, DB, DATE_FORMAT
-from services.main import check_new_events, get_events
+from main import check_new_events, get_events
 
 
 logging.basicConfig(level=logging.INFO)
@@ -25,10 +25,11 @@ async def start(message: types.Message) -> None:
 
 @dp.message_handler(commands="week")
 async def get_week(message: types.Message) -> None:
-    with open(DB, "r") as file:
-        events_dict = json.load(file)
+    #     with open(DB, "r") as file:
+    #         events_dict = json.load(file)
 
-    week = list(events_dict.items())
+    events = get_events()
+    week = list(events.items())
     for key, value in week[-7:]:
         event: str = f"{hbold(value['date'])}\n{value['event']}"
 

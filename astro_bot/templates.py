@@ -1,3 +1,6 @@
+from aiogram.utils.markdown import hbold
+
+
 GREETING = """Hello, I'm Astrobot!
 
 I will searching and collect
@@ -29,8 +32,11 @@ for getting celestial event for certain
 date.
 """
 
+NOTHING_FOUND = "No events found..."
 
-NOTHING_FOUND = "There's nothing for this week yet..."
+
+ERROR_MESSAGE = "Something went wrong. Please, try later."
 
 
-ERROR_MESSAGE = "Events not found. Please, try later."
+def MESSAGE_WITH_EVENT(value):
+    return f"{hbold(value['date'])}\n{value['event']}"

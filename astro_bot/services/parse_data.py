@@ -51,9 +51,9 @@ def calc_time(event: str, from_tz: str, to_tz: str) -> str:
     return gmt_event
 
 
-def make_events_dict(raw_lst: list) -> dict | None:
+def make_events_dict(raw_lst: list) -> dict:
     if len(raw_lst[0]) != len(raw_lst[1]):
-        return
+        return {}
 
     events_dict = {}
     fmt = "%A, %B %d, %Y"
