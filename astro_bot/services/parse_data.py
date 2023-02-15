@@ -9,6 +9,7 @@ from datetime import datetime
 def cut_content(file_name: str) -> list:
     date_pattern = re.compile(r"^\w+. \w+ \d+$", re.MULTILINE)
 
+    # FIXME (to cut the strings correctly)
     with open(file_name, "rt") as file:
         source = file.read()
 

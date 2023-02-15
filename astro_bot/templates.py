@@ -9,6 +9,7 @@ celestial events for you.
 You can send me commands:
 /start - start me;
 /help - get this message;
+/new - check new celestial events;
 /week - get weekly digest;
 /today - get event for today;
 /yesterday - get event for yesterday;
@@ -19,9 +20,14 @@ for getting celestial event for certain
 date.
 
 Let's start your astro adventure!
+
+P.S. Special thanks Astronomy Magazine for
+provided data. Visit it if you want more:
+https://astronomy.com/.
 """
 
 HELP = """/help - get this message;
+/new - check new celestial events;
 /week - get weekly digest;
 /today - get event for today;
 /yesterday - get event for yesterday;

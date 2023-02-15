@@ -1,14 +1,15 @@
+"""Reading and writing data from/to db"""
+
 import json
-import asyncio
 
 from config import FILE_NAME, DB
-from services.scraper import get_url, save_content
+from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
 
 
 async def get_data() -> dict:
-    link = get_url()
-    content = save_content(link)
+    content = await scrap_content_to_text()
+
     with open(FILE_NAME, "wt") as file:
         file.writelines(content)
         f_name = file.name
@@ -54,12 +55,3 @@ async def get_events() -> dict:
         events = json.load(db)
 
     return events
-
-
-def main() -> None:
-    asyncio.run(db_init())
-    print(check_new_events())
-
-
-if __name__ == "__main__":
-    main()

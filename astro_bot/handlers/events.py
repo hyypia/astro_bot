@@ -82,7 +82,7 @@ async def get_day(message: types.Message) -> None:
     await message.reply(msg)
 
 
-def register_handler_week(dp: Dispatcher) -> None:
+def register_handler_events(dp: Dispatcher) -> None:
     dp.register_message_handler(get_week, commands="week")
     dp.register_message_handler(get_new, commands="new")
     dp.register_message_handler(get_today, commands="today")
