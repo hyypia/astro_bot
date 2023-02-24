@@ -1,4 +1,8 @@
+from datetime import datetime
+
 from aiogram.utils.markdown import hbold
+
+from config import DATE_FORMAT
 
 
 GREETING = """Hello, I'm Astrobot!
@@ -44,5 +48,16 @@ NOTHING_FOUND = "No events found..."
 ERROR_MESSAGE = "Something went wrong. Please, try later."
 
 
-def MESSAGE_WITH_EVENT(value):
+def MESSAGE_WITH_EVENT(value) -> str:
     return f"{hbold(value['date'])}\n{value['event']}"
+
+
+def MESSAGE_WITH_IMAGE(res_dict: dict) -> tuple:
+    img = res_dict["url"]
+    message = (
+        f"{hbold(res_dict['title'])}\n\n "
+        f"{res_dict['explanation']}\n\n "
+        f"Copyright: {res_dict['copyright']}"
+    )
+
+    return img, message

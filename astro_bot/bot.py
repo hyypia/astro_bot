@@ -3,7 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types
 
 from config import TOKEN
-from handlers import start, help_, events
+from handlers import start, help_, events, image
 
 
 async def main():
@@ -14,6 +14,7 @@ async def main():
 
     start.register_handler_start(dp)
     help_.register_handler_help(dp)
+    image.register_handler_image(dp)
     events.register_handler_events(dp)
 
     await dp.start_polling()
