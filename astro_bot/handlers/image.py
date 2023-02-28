@@ -1,4 +1,5 @@
 from aiogram import Dispatcher, types
+from aiogram.dispatcher.filters import Text
 
 from services.image import get_image
 from templates import MESSAGE_WITH_IMAGE
@@ -13,4 +14,4 @@ async def get_image_of_the_day(message: types.Message):
 
 
 def register_handler_image(dp: Dispatcher):
-    dp.register_message_handler(get_image_of_the_day, commands="image")
+    dp.register_message_handler(get_image_of_the_day, Text(equals="image"))

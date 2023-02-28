@@ -2,6 +2,7 @@ from string import Template
 from datetime import date, datetime, timedelta
 
 from aiogram import Dispatcher, types
+from aiogram.dispatcher.filters import Text
 
 from config import DATE_FORMAT
 from services.events import get_events, check_new_events
@@ -83,9 +84,9 @@ async def get_day(message: types.Message) -> None:
 
 
 def register_handler_events(dp: Dispatcher) -> None:
-    dp.register_message_handler(get_week, commands="week")
-    dp.register_message_handler(get_new, commands="new")
-    dp.register_message_handler(get_today, commands="today")
-    dp.register_message_handler(get_yesterday, commands="yesterday")
-    dp.register_message_handler(get_tomorrow, commands="tomorrow")
+    dp.register_message_handler(get_week, Text(equals="week"))
+    dp.register_message_handler(get_new, Text(equals="new"))
+    dp.register_message_handler(get_today, Text(equals="today"))
+    dp.register_message_handler(get_yesterday, Text(equals="yesterday"))
+    dp.register_message_handler(get_tomorrow, Text(equals="tomorrow"))
     dp.register_message_handler(get_day)
