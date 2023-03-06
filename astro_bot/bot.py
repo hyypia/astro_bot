@@ -2,12 +2,18 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
 
-from config import TOKEN
+from config import TOKEN, LOGGING_FORMAT
 from handlers import start, help_, events, image
 
 
 async def main():
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        filename="astro_bot.log",
+        filemode="w",
+        format=LOGGING_FORMAT,
+        level=logging.DEBUG,
+    )
+    logging.info("Start application")
 
     bot = Bot(token=TOKEN, parse_mode=types.ParseMode.HTML)
     dp = Dispatcher(bot)

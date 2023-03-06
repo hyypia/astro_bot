@@ -42,9 +42,8 @@ for getting celestial event for certain
 date.
 """
 
+BS_ERROR = "No content found."
 NOTHING_FOUND = "No events found..."
-
-
 ERROR_MESSAGE = "Something went wrong. Please, try later."
 
 

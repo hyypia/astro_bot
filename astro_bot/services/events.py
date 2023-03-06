@@ -30,20 +30,14 @@ async def db_init() -> None:
 
 
 async def check_new_events() -> dict:
-    new_events = {}
-
     with open(DB, "r") as db:
         events_dict = json.load(db)
 
-    events = await get_data()
+    dates = await get_data()
 
-    if events:
-        for date in events:
-            if date in events_dict:
-                continue
-            else:
-                events_dict[date] = events[date]
-                new_events[date] = events[date]
+    if dates:
+        new_events = {date: dates[date] for date in dates if date not in events_dict}
+        events_dict.update(new_events)
 
     await write_to_db(events_dict)
 

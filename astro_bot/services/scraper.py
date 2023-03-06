@@ -7,7 +7,7 @@ import re
 from bs4 import BeautifulSoup
 
 from services.req import make_req
-from templates import ERROR_MESSAGE
+from templates import BS_ERROR, ERROR_MESSAGE
 from config import PAGE_URL
 
 
@@ -21,7 +21,8 @@ async def get_url() -> str:
     soup = BeautifulSoup(res.content, "html.parser")
     links = soup.find_all(href=re.compile("sky-this-week"))
     if links is None:
-        return ERROR_MESSAGE
+        return BS_ERROR
+
     target_link = links[0]
 
     return f"https://astronomy.com{target_link.get('href')}"
@@ -38,7 +39,7 @@ async def scrap_content_to_text() -> str:
     soup = BeautifulSoup(page.content, "html.parser")
     contents = soup.find_all("div", class_="content")
     if contents is None:
-        return ERROR_MESSAGE
+        return BS_ERROR
 
     text = ""
     for content in contents:

@@ -1,7 +1,9 @@
+.vim
 .env
 __pycache__/
 services/__pycache__/
 venv/
 events_dict.json
 user_agents.txt
-raw_data.txt
+astro_bot/raw_data.txt
+astro_bot.log

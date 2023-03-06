@@ -1,8 +1,8 @@
 from services.req import make_req
+from config import IMAGE_OF_THE_DAY_URL
 
 
 def get_image():
-    res = make_req(
-        "https://api.nasa.gov/planetary/apod?api_key=fXQ5MaFBHMZP7oiG4usDKm9ZgcR1Brl06LmAOyts"
-    )
+    res = make_req(IMAGE_OF_THE_DAY_URL)
+
     return res
