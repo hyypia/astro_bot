@@ -16,16 +16,6 @@ def get_message_for_user(target_date: str, dates: dict) -> str:
         return NOTHING_FOUND
 
 
-async def get_week(message: types.Message) -> None:
-    events = await get_events()
-    events_list = list(events.items())
-
-    for _, value in events_list[-7:]:
-        event = MESSAGE_WITH_EVENT(value)
-
-        await message.reply(event)
-
-
 async def get_new(message: types.Message) -> None:
     new_events = await check_new_events()
 
@@ -83,8 +73,7 @@ async def get_day(message: types.Message) -> None:
     await message.reply(msg)
 
 
-def register_handler_events(dp: Dispatcher) -> None:
-    dp.register_message_handler(get_week, Text(equals="week"))
+def register_handler_events(dp: Dispatcher):
     dp.register_message_handler(get_new, Text(equals="new"))
     dp.register_message_handler(get_today, Text(equals="today"))
     dp.register_message_handler(get_yesterday, Text(equals="yesterday"))
