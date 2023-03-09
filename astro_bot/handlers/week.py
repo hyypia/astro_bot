@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 
 from services.events import get_events
 from templates import MESSAGE_WITH_EVENT
-from keyboards.inline_keyboard import get_inline_keyboard
+from keyboards.inline_keyboard import get_inline_week_keyboard
 
 
 user_days_counter = {}
@@ -21,7 +21,7 @@ async def get_week_msg_text(message: types.Message):
     _, event = data[-7]
     msg = MESSAGE_WITH_EVENT(event)
 
-    await message.answer(msg, reply_markup=get_inline_keyboard())
+    await message.answer(msg, reply_markup=get_inline_week_keyboard())
 
 
 async def update_week_msg_text(message: types.Message, day_num: int):
@@ -29,7 +29,7 @@ async def update_week_msg_text(message: types.Message, day_num: int):
     _, event = data[-(day_num)]
     msg = MESSAGE_WITH_EVENT(event)
 
-    await message.edit_text(msg, reply_markup=get_inline_keyboard())
+    await message.edit_text(msg, reply_markup=get_inline_week_keyboard())
 
 
 async def callbacks_counter(call: types.CallbackQuery):
@@ -51,5 +51,4 @@ async def callbacks_counter(call: types.CallbackQuery):
 
 def register_handler_week(dp: Dispatcher):
     dp.register_message_handler(get_week_msg_text, Text(equals="week"))
-    # dp.register_message_handler(update_week_msg_text, Text(equals="week"))
-    dp.register_callback_query_handler(callbacks_counter, Text(startswith="event_"))
+    dp.register_callback_query_handler(callbacks_counter, Text(startswith="week_"))

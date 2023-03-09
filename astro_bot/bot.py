@@ -3,7 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types
 
 from config import TOKEN, LOGGING_FORMAT
-from handlers import start, help_, week, events, image
+from handlers import start, help_, week, new, events, image, certain_day
 
 
 async def main():
@@ -22,7 +22,9 @@ async def main():
     help_.register_handler_help(dp)
     image.register_handler_image(dp)
     week.register_handler_week(dp)
+    new.register_handler_new_days(dp)
     events.register_handler_events(dp)
+    certain_day.register_handler_certain_day(dp)
 
     await dp.start_polling()
 

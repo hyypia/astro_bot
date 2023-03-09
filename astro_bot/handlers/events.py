@@ -1,11 +1,10 @@
-from string import Template
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
 from config import DATE_FORMAT
-from services.events import get_events, check_new_events
+from services.events import get_events
 from templates import MESSAGE_WITH_EVENT, NOTHING_FOUND
 
 
@@ -14,18 +13,6 @@ def get_message_for_user(target_date: str, dates: dict) -> str:
         return MESSAGE_WITH_EVENT(dates[target_date])
     else:
         return NOTHING_FOUND
-
-
-async def get_new(message: types.Message) -> None:
-    new_events = await check_new_events()
-
-    if new_events:
-        for _, value in new_events.items():
-            event = MESSAGE_WITH_EVENT(value)
-
-            await message.reply(event)
-    else:
-        await message.reply(NOTHING_FOUND)
 
 
 async def get_today(message: types.Message) -> None:
@@ -57,25 +44,7 @@ async def get_tomorrow(message: types.Message) -> None:
     await message.reply(msg)
 
 
-async def get_day(message: types.Message) -> None:
-    # Getting user date for searching event in db
-    tmpl_date = "$year-$input_date"
-    input_date = Template(tmpl_date).substitute(
-        year=datetime.today().year, input_date=message.text
-    )
-    dt_input = datetime.strptime(input_date, DATE_FORMAT)
-    target_date = dt_input.date().strftime(DATE_FORMAT)
-
-    events = await get_events()
-
-    msg = get_message_for_user(target_date, events)
-
-    await message.reply(msg)
-
-
 def register_handler_events(dp: Dispatcher):
-    dp.register_message_handler(get_new, Text(equals="new"))
     dp.register_message_handler(get_today, Text(equals="today"))
     dp.register_message_handler(get_yesterday, Text(equals="yesterday"))
     dp.register_message_handler(get_tomorrow, Text(equals="tomorrow"))
-    dp.register_message_handler(get_day)
