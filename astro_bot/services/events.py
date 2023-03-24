@@ -2,15 +2,27 @@
 
 import json
 
-from config import FILE_NAME, DB
+from config import BOOFER_FILE, EVENTS
 from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
+
+
+async def write_to_db(data: dict) -> None:
+    with open(EVENTS, "w") as db:
+        json.dump(data, db, ensure_ascii=False, indent="\t")
+
+
+async def read_from_db(db_name: str):
+    with open(db_name, "r") as db:
+        data = json.load(db)
+
+    return data
 
 
 async def get_data() -> dict:
     content = await scrap_content_to_text()
 
-    with open(FILE_NAME, "wt") as file:
+    with open(BOOFER_FILE, "wt") as file:
         file.writelines(content)
         f_name = file.name
 
@@ -19,9 +31,9 @@ async def get_data() -> dict:
     return make_events_dict(content_list)
 
 
-async def write_to_db(data: dict) -> None:
-    with open(DB, "w") as db:
-        json.dump(data, db, ensure_ascii=False, indent="\t")
+async def get_events():
+    events = await read_from_db(EVENTS)
+    return events
 
 
 async def db_init() -> None:
@@ -30,8 +42,7 @@ async def db_init() -> None:
 
 
 async def check_new_events() -> dict:
-    with open(DB, "r") as db:
-        events_dict = json.load(db)
+    events_dict = await read_from_db(EVENTS)
 
     dates = await get_data()
 
@@ -42,10 +53,3 @@ async def check_new_events() -> dict:
     await write_to_db(events_dict)
 
     return new_events
-
-
-async def get_events() -> dict:
-    with open(DB, "r") as db:
-        events = json.load(db)
-
-    return events

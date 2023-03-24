@@ -1,50 +1,49 @@
-from datetime import datetime
-
 from aiogram.utils.markdown import hbold
 
-from config import DATE_FORMAT
 
+GREETING_MESSAGE = f"""Hello, I'm Astrobot!
 
-GREETING = """Hello, I'm Astrobot!
+I will searching and collect celestial events for you.
 
-I will searching and collect
-celestial events for you.
-
-You can send me commands:
-/start - start me;
-/help - get this message;
-/new - check new celestial events;
-/week - get weekly digest;
-/today - get event for today;
-/yesterday - get event for yesterday;
-/tomorrow - get event for tomorrow.
-
-You can send me date in MM-DD format
-for getting celestial event for certain
-date.
+If you want getting actual date and time of events for your local, please \
+push {hbold("Share location")} key or {hbold("GMT")} key for getting date and \
+time for GMT time zone (UTC+0).
 
 Let's start your astro adventure!
 
-P.S. Special thanks Astronomy Magazine for
-provided data. Visit it if you want more:
-https://astronomy.com/.
+P.S. Special thanks Astronomy Magazine for provided data. Visit \
+https://astronomy.com/ if you want more.
 """
 
-HELP = """/help - get this message;
-/new - check new celestial events;
-/week - get weekly digest;
-/today - get event for today;
-/yesterday - get event for yesterday;
-/tomorrow - get event for tomorrow.
+START_MESSAGE = f"""You can send me commands (press keys):
 
-You can send me date in DD:MM format
-for getting celestial event for certain
-date.
+{hbold("Help")} - get message with commands list;
+{hbold("New")} - check new celestial events;
+{hbold("Week")} - get weekly digest;
+{hbold("Today")} - get event for today;
+{hbold("Yesterday")} - get event for yesterday;
+{hbold("Tomorrow")} - get event for tomorrow;
+{hbold("Image of the day")} - for get image of the day from NASA.
+
+You can send me date in {hbold("MM-DD")} format for getting celestial event \
+for certain date.
 """
 
-BS_ERROR = "No content found."
-NOTHING_FOUND = "No events found..."
+HELP_MESSAGE = f"""{hbold("Help")} - get message with commands list;
+{hbold("New")} - check new celestial events;
+{hbold("Week")} - get weekly digest;
+{hbold("Today")} - get event for today;
+{hbold("Yesterday")} - get event for yesterday;
+{hbold("Tomorrow")} - get event for tomorrow;
+{hbold("Image of the day")} - for get image of the day from NASA.
+
+You can send me date in {hbold("MM-DD")} format for getting celestial event \
+for certain date.
+"""
+
+SCRAPING_ERROR_MESSAGE = "No content found."
 ERROR_MESSAGE = "Something went wrong. Please, try later."
+NOTHING_NEWS_FOUND = "No events found..."
 
 
 def MESSAGE_WITH_EVENT(value) -> str:
@@ -54,8 +53,8 @@ def MESSAGE_WITH_EVENT(value) -> str:
 def MESSAGE_WITH_IMAGE(res_dict: dict) -> tuple:
     img = res_dict["url"]
     message = (
-        f"{hbold(res_dict['title'])}\n\n "
-        f"{res_dict['explanation']}\n\n "
+        f"{hbold(res_dict['title'])}\n\n"
+        f"{res_dict['explanation']}\n\n"
         f"Copyright: {res_dict['copyright']}"
     )
 

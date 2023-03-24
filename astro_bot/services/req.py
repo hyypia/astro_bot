@@ -3,13 +3,13 @@ import requests
 import logging
 from requests.exceptions import Timeout, HTTPError
 
-from config import AGENTS_FILE
+from config import AGENTS
 
 
 def generate_user_agents() -> dict:
     headers = {}
     try:
-        with open(AGENTS_FILE, "rt") as file:
+        with open(AGENTS, "rt") as file:
             user_agents = file.read().splitlines()
     except FileNotFoundError as fnf_err:
         logging.exception(fnf_err)

@@ -1,5 +1,5 @@
 """Searching astro events for week on Astronomy Magazine
-(https://astronomy.com)and pushing weekly digest and daily 
+(https://astronomy.com)and pushing weekly digest and daily
 events for watching sky"""
 
 import re
@@ -7,7 +7,7 @@ import re
 from bs4 import BeautifulSoup
 
 from services.req import make_req
-from templates import BS_ERROR, ERROR_MESSAGE
+from templates import SCRAPING_ERROR_MESSAGE, ERROR_MESSAGE
 from config import PAGE_URL
 
 
@@ -21,7 +21,7 @@ async def get_url() -> str:
     soup = BeautifulSoup(res.content, "html.parser")
     links = soup.find_all(href=re.compile("sky-this-week"))
     if links is None:
-        return BS_ERROR
+        return SCRAPING_ERROR_MESSAGE
 
     target_link = links[0]
 
@@ -39,7 +39,7 @@ async def scrap_content_to_text() -> str:
     soup = BeautifulSoup(page.content, "html.parser")
     contents = soup.find_all("div", class_="content")
     if contents is None:
-        return BS_ERROR
+        return SCRAPING_ERROR_MESSAGE
 
     text = ""
     for content in contents:

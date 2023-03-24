@@ -50,5 +50,5 @@ async def callbacks_counter(call: types.CallbackQuery):
 
 
 def register_handler_week(dp: Dispatcher):
-    dp.register_message_handler(get_week_msg_text, Text(equals="week"))
+    dp.register_message_handler(get_week_msg_text, Text(equals="Week"))
     dp.register_callback_query_handler(callbacks_counter, Text(startswith="week_"))

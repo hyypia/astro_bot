@@ -1,12 +1,12 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
-from templates import HELP
+from templates import HELP_MESSAGE
 
 
 async def help_(message: types.Message):
-    await message.reply(HELP)
+    await message.reply(HELP_MESSAGE)
 
 
 def register_handler_help(dp: Dispatcher):
-    dp.register_message_handler(help_, Text(equals="help"))
+    dp.register_message_handler(help_, Text(equals="Help"))
