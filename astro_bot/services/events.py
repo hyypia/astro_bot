@@ -2,13 +2,13 @@
 
 import json
 
-from config import BOOFER_FILE, EVENTS
+from config import BOOFER_FILE, EVENTS, USERS
 from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
 
 
-async def write_to_db(data: dict) -> None:
-    with open(EVENTS, "w") as db:
+async def write_to_db(data: dict, db_name: str) -> None:
+    with open(db_name, "w") as db:
         json.dump(data, db, ensure_ascii=False, indent="\t")
 
 
@@ -38,10 +38,10 @@ async def get_events():
 
 async def db_init() -> None:
     # events = await get_data()
-    await write_to_db(await get_data())
+    await write_to_db(await get_data(), EVENTS)
 
 
-async def check_new_events() -> dict:
+async def check_new_events() -> dict | None:
     events_dict = await read_from_db(EVENTS)
 
     dates = await get_data()
@@ -50,6 +50,16 @@ async def check_new_events() -> dict:
         new_events = {date: dates[date] for date in dates if date not in events_dict}
         events_dict.update(new_events)
 
-    await write_to_db(events_dict)
+        await write_to_db(events_dict, EVENTS)
 
-    return new_events
+        return new_events
+
+
+async def add_user(user: dict):
+    users = await read_from_db(USERS)
+
+    for key in user:
+        if key not in users:
+            users.update(user)
+
+        await write_to_db(users, USERS)

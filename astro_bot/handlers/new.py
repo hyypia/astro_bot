@@ -10,8 +10,8 @@ user_days_counter = {}
 new_events = {}
 
 
-def make_msg_with_one_event(events: dict) -> str:
-        date, event = list(events.items())[-(len(events))]
+def make_msg_with_one_event(events: dict, day_num=0) -> str:
+        date, event = list(events.items())[-(day_num or len(events))]
         return MESSAGE_WITH_EVENT(event)
 
 
@@ -27,8 +27,9 @@ async def get_new_days(message: types.Message):
         await message.answer(msg, reply_markup=get_inline_new_button())
 
     elif new_events and len(new_events) == 1:
-        _, event = list(new_events.items())[-(len(new_events))]
-        msg = MESSAGE_WITH_EVENT(event)
+        msg = make_msg_with_one_event(new_events)
+        # _, event = list(new_events.items())[-(len(new_events))]
+        # msg = MESSAGE_WITH_EVENT(event)
 
         await message.answer(msg)
 
@@ -40,14 +41,16 @@ async def update_new_days_msg_text(message: types.Message, events: dict, day_num
     events = await get_events()
 
     if day_num > 1:
-        _, event = list(events.items())[-(day_num)]
-        msg = MESSAGE_WITH_EVENT(event)
+        msg = make_msg_with_one_event(events, day_num)
+        # _, event = list(events.items())[-(day_num)]
+        # msg = MESSAGE_WITH_EVENT(event)
 
         await message.edit_text(msg, reply_markup=get_inline_new_button())
 
     elif day_num == 1:
-        _, event = list(events.items())[-(day_num)]
-        msg = MESSAGE_WITH_EVENT(event)
+        msg = make_msg_with_one_event(events, day_num)
+        # _, event = list(events.items())[-(day_num)]
+        # msg = MESSAGE_WITH_EVENT(event)
 
         await message.edit_text(msg)
 

@@ -1,24 +1,31 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
+from timezonefinder import TimezoneFinder
 
 from templates import START_MESSAGE
+from services.events import add_user
 from keyboards.reply_keyboard import main_keyboard
 
 
 async def start(message: types.Message):
-    user_data = {
-        "id": message.from_user.id,
+    user_data = {}
+    user_id = message.from_user.id
+    user_data[str(user_id)] = {
         "name": message.from_user.full_name,
         "username": message.from_user.username,
         "timezone": "GMT",
     }
-    text = message.text
-    if text == "GMT":
-        print(user_data)
-        await message.answer(text, reply_markup=main_keyboard())
+
+    if message.text == "GMT":
+        await add_user(user_data)
+        await message.answer(START_MESSAGE, reply_markup=main_keyboard())
+
     else:
-        user_data["timezone"] = message.location
-        print(user_data)
+        tf = TimezoneFinder()
+        user_data[str(user_id)]["timezone"] = tf.timezone_at(
+            lng=message.location.longitude, lat=message.location.latitude
+        )
+        await add_user(user_data)
         await message.answer(START_MESSAGE, reply_markup=main_keyboard())
 
 
