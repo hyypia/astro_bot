@@ -19,7 +19,7 @@ def create_connection(db):
 def execute_query(connection, query):
     curs = connection.cursor()
     try:
-        cursor.execute(query)
+        curs.execute(query)
         connection.commit()
         print("Query executed successfully")
     except Error as e:
@@ -29,4 +29,26 @@ def execute_query(connection, query):
 
 def main() -> None:
     database = r"astrobase.db"
-    connection = create_connection(database)
+
+    create_users_table = """CREATE TABLE IF NOT EXISTS users (
+    telegram_id BIGINT PRIMARY KEY,
+    user_name TEXT NOT NULL,
+    name TEXT,
+    timezone TEXT NOT NULL
+    )"""
+
+    create_events_table = """CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    iso_date TEXT NOT NULL,
+    date TEXT NOT NULL,
+    week_num INTEGER,
+    description TEXT NOT NULL
+    )"""
+
+    conn = create_connection(database)
+    execute_query(conn, create_users_table)
+    execute_query(conn, create_events_table)
+
+
+if __name__ == "__main__":
+    main()
