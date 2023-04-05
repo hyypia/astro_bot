@@ -63,18 +63,6 @@ async def check_new_events() -> dict | None:
 
 
 async def add_user(user: dict) -> None:
-    # users = await read_from_db(USERS)
     conn = db.create_connection(DB)
-    users_id = db.execute_read_query(conn, queries.select_users_id)
-    print(user, users_id)
-
-    db.execute_query(conn, queries.create_user_ins, tuple(user.values()))
-
-    # for id_ in users_id:
-    #     if user["telegram_id"] not in users_id:
-    #         # users.update(user)
-    #         print("New user added")
-    #     else:
-    #         print("This not new user")
-
-    #     await write_to_db(users, USERS)
+    if conn:
+        db.execute_query(conn, queries.create_user_ins, tuple(user.values()))

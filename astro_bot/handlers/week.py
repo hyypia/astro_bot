@@ -29,7 +29,6 @@ async def update_week_msg_text(message: types.Message, day_num: int):
 
 
 async def callbacks_counter(call: types.CallbackQuery) -> None:
-
     days_counter = user_days_counter.get(call.from_user.id, 7)
     action = call.data.split("_")[1]
 

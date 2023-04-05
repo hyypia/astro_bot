@@ -45,8 +45,9 @@ def main() -> None:
     database = r"astrobase.db"
 
     conn = create_connection(database)
-    execute_query(conn, queries.create_users_table)
-    execute_query(conn, queries.create_events_table)
+    if conn:
+        execute_query(conn, queries.create_users_table)
+        execute_query(conn, queries.create_events_table)
 
 
 if __name__ == "__main__":
