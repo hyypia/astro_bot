@@ -53,10 +53,11 @@ def calc_time(event: str, from_tz: str, to_tz: str) -> str:
 
 
 def make_events_dict(raw_lst: list) -> dict:
-    if len(raw_lst[0]) != len(raw_lst[1]):
-        return {}
-
     events_dict = {}
+
+    if len(raw_lst[0]) != len(raw_lst[1]):
+        return events_dict
+
     fmt = "%A, %B %d, %Y"
     today = datetime.today()
     week_num = today.strftime("%W")

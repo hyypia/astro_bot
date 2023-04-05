@@ -12,6 +12,7 @@ TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 NASA_TOKEN = os.getenv("NASA_IMAGE_OF_THE_DAY_TOKEN", "")
 
 # DBs
+DB = os.path.join(BASE_PATH, os.getenv("DB", ""))
 USERS = os.path.join(BASE_PATH, os.getenv("USERS_DB", ""))
 EVENTS = os.path.join(BASE_PATH, os.getenv("EVENTS_DB", ""))
 AGENTS = os.path.join(BASE_PATH, os.getenv("AGENTS_DB", ""))

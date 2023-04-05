@@ -2,12 +2,14 @@
 
 import json
 
-from config import BOOFER_FILE, EVENTS, USERS
+import db
+import queries
+from config import BOOFER_FILE, EVENTS, USERS, DB
 from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
 
 
-async def write_to_db(data: dict, db_name: str) -> None:
+async def write_to_db(data: dict | None, db_name: str) -> None:
     with open(db_name, "w") as db:
         json.dump(data, db, ensure_ascii=False, indent="\t")
 
@@ -37,6 +39,11 @@ async def get_events():
 
 
 async def db_init() -> None:
+    conn = db.create_connection(DB)
+    if conn:
+        db.execute_query(conn, queries.create_events_table)
+        db.execute_query(conn, queries.create_users_table)
+    print("DB inited successfully")
     # events = await get_data()
     await write_to_db(await get_data(), EVENTS)
 
@@ -55,11 +62,19 @@ async def check_new_events() -> dict | None:
         return new_events
 
 
-async def add_user(user: dict):
-    users = await read_from_db(USERS)
+async def add_user(user: dict) -> None:
+    # users = await read_from_db(USERS)
+    conn = db.create_connection(DB)
+    users_id = db.execute_read_query(conn, queries.select_users_id)
+    print(user, users_id)
 
-    for key in user:
-        if key not in users:
-            users.update(user)
+    db.execute_query(conn, queries.create_user_ins, tuple(user.values()))
 
-        await write_to_db(users, USERS)
+    # for id_ in users_id:
+    #     if user["telegram_id"] not in users_id:
+    #         # users.update(user)
+    #         print("New user added")
+    #     else:
+    #         print("This not new user")
+
+    #     await write_to_db(users, USERS)
