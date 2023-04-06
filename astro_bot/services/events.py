@@ -9,9 +9,11 @@ from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
 
 
-async def write_to_db(data: dict | None, db_name: str) -> None:
-    with open(db_name, "w") as db:
-        json.dump(data, db, ensure_ascii=False, indent="\t")
+async def write_to_db(query, data) -> None:
+    conn = db.create_connection(DB)
+    if conn:
+        db.execute_query(conn, query, data)
+        conn.close()
 
 
 async def read_from_db(db_name: str):
@@ -21,13 +23,11 @@ async def read_from_db(db_name: str):
     return data
 
 
-async def get_data() -> dict:
+async def get_data_dict() -> dict:
     content = await scrap_content_to_text()
-
     with open(BOOFER_FILE, "wt") as file:
         file.writelines(content)
         f_name = file.name
-
     content_list = cut_content(f_name)
 
     return make_events_dict(content_list)
@@ -43,26 +43,26 @@ async def db_init() -> None:
     if conn:
         db.execute_query(conn, queries.create_events_table)
         db.execute_query(conn, queries.create_users_table)
-    print("DB inited successfully")
-    # events = await get_data()
-    await write_to_db(await get_data(), EVENTS)
+        print("DB inited successfully")
+
+    dates = await get_data_dict()
+    for date in dates:
+        await write_to_db(queries.create_event_ins, (date,) + tuple(dates[date].values()))
 
 
 async def check_new_events() -> dict | None:
     events_dict = await read_from_db(EVENTS)
 
-    dates = await get_data()
+    dates = await get_data_dict()
 
     if dates:
         new_events = {date: dates[date] for date in dates if date not in events_dict}
         events_dict.update(new_events)
 
-        await write_to_db(events_dict, EVENTS)
+        # await write_to_db(events_dict)
 
         return new_events
 
 
 async def add_user(user: dict) -> None:
-    conn = db.create_connection(DB)
-    if conn:
-        db.execute_query(conn, queries.create_user_ins, tuple(user.values()))
+    await write_to_db(queries.create_user_ins, tuple(user.values()))

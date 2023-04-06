@@ -23,7 +23,7 @@ async def get_week_msg_text(message: types.Message) -> None:
     await message.answer(msg, reply_markup=get_inline_week_keyboard())
 
 
-async def update_week_msg_text(message: types.Message, day_num: int):
+async def update_week_msg_text(message: types.Message, day_num: int) -> None:
     msg = await make_msg_with_one_day(day_num)
     await message.edit_text(msg, reply_markup=get_inline_week_keyboard())
 
@@ -31,15 +31,12 @@ async def update_week_msg_text(message: types.Message, day_num: int):
 async def callbacks_counter(call: types.CallbackQuery) -> None:
     days_counter = user_days_counter.get(call.from_user.id, 7)
     action = call.data.split("_")[1]
-
     if action == "previous":
         user_days_counter[call.from_user.id] = days_counter + 1
-
         await update_week_msg_text(call.message, days_counter + 1)
 
     elif action == "next":
         user_days_counter[call.from_user.id] = days_counter - 1
-
         await update_week_msg_text(call.message, days_counter - 1)
 
     await call.answer()
