@@ -55,7 +55,8 @@ async def db_init() -> None:
         )
 
 
-# async def check_new_events() -> dict | None:
+async def check_new_events() -> dict | None:
+    pass
 #     events_dict = await read_from_db(EVENTS)
 #
 #     dates = await get_data_dict()

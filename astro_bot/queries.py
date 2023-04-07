@@ -17,9 +17,9 @@ create_user_ins = """INSERT INTO
     VALUES (?, ?, ?, ?)"""
 
 create_event_ins = """INSERT INTO
-    events (iso_date, date, week_num, description)
+    events (iso_date, week_num, date, description)
     VALUES (?, ?, ?, ?)"""
 
 select_users_id = "SELECT telegram_id from users"
 
-select_events = "SELECT * from events"
+select_events = "SELECT date, description from events"

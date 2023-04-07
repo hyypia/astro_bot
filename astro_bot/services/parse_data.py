@@ -3,10 +3,7 @@
 
 import re
 import pytz
-import random
 from datetime import datetime
-
-import pprint
 
 
 def cut_content(file_name: str) -> list:
@@ -77,5 +74,4 @@ def make_events_dict(raw_lst: list) -> dict:
             "event": event,
         }
 
-    pprint.pprint(events_dict)
     return events_dict

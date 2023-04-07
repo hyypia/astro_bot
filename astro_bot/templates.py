@@ -46,8 +46,8 @@ ERROR_MESSAGE = "Something went wrong. Please, try later."
 NOTHING_NEWS_FOUND = "No events found..."
 
 
-def MESSAGE_WITH_EVENT(value) -> str:
-    return f"{hbold(value['date'])}\n{value['event']}"
+def MESSAGE_WITH_EVENT(date, description) -> str:
+    return f"{hbold(date)}\n{description}"
 
 
 def MESSAGE_WITH_IMAGE(res_dict: dict) -> tuple:
