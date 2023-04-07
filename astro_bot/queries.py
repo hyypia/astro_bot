@@ -21,3 +21,5 @@ create_event_ins = """INSERT INTO
     VALUES (?, ?, ?, ?)"""
 
 select_users_id = "SELECT telegram_id from users"
+
+select_events = "SELECT * from events"

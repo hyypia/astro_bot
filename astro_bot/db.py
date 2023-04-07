@@ -28,12 +28,17 @@ def execute_query(connection: sqlite3.Connection, query: str, params=()) -> None
         print(f"Execute ERROR: {e}")
 
 
-def execute_read_query(connection, query):
+def execute_read_query(
+    connection: sqlite3.Connection, query: str, count
+) -> list | None:
     cursor = connection.cursor()
     result = None
     try:
         cursor.execute(query)
-        result = cursor.fetchall()
+        if count is None:
+            result = cursor.fetchall()
+        else:
+            result = cursor.fetchmany(count)
     except Error as e:
         logging.error(e)
         print(f"Read DB ERROR: {e}")
@@ -46,8 +51,7 @@ def main() -> None:
 
     conn = create_connection(database)
     if conn:
-        execute_query(conn, queries.create_users_table)
-        execute_query(conn, queries.create_events_table)
+        print(execute_read_query(conn, queries.select_events, -7))
 
 
 if __name__ == "__main__":

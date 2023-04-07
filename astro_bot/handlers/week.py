@@ -10,7 +10,7 @@ user_days_counter = {}
 
 
 async def make_msg_with_one_day(days_count: int) -> str:
-    events = await get_events()
+    events = await get_events(-7)
     events_list = list(events.items())
     _, event = events_list[-(days_count)]
     msg = MESSAGE_WITH_EVENT(event)
