@@ -2,7 +2,7 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
 from services.events import get_events
-from templates import MESSAGE_WITH_EVENT
+from templates import MESSAGE_WITH_EVENT, NOTHING_NEWS_FOUND
 from keyboards.inline_keyboard import get_inline_week_keyboard
 
 
@@ -11,9 +11,10 @@ user_days_counter = {}
 
 async def make_msg_with_one_day(days_count: int) -> str:
     events = await get_events(-7)
-    events_list = list(events.items())
-    _, event = events_list[-(days_count)]
-    msg = MESSAGE_WITH_EVENT(event)
+    msg = NOTHING_NEWS_FOUND
+    if events:
+        _, event = events
+        msg = MESSAGE_WITH_EVENT(event)
 
     return msg
 
