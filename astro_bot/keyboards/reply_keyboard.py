@@ -5,7 +5,6 @@ def main_keyboard() -> ReplyKeyboardMarkup:
     buttons = [
         "Help",
         "Week",
-        "New",
         "Yesterday",
         "Today",
         "Tomorrow",

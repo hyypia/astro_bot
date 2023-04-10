@@ -3,11 +3,11 @@ from aiogram.dispatcher.filters import Text
 from timezonefinder import TimezoneFinder
 
 from templates import START_MESSAGE
-from services.events import add_user
+from services.users import add_user
 from keyboards.reply_keyboard import main_keyboard
 
 
-async def start(message: types.Message):
+async def start(message: types.Message) -> None:
     user_data = {
         "telegram_id": message.from_user.id,
         "name": message.from_user.full_name,

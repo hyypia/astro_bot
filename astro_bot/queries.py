@@ -20,6 +20,10 @@ create_event_ins = """INSERT INTO
     events (iso_date, week_num, date, description)
     VALUES (?, ?, ?, ?)"""
 
-select_users_id = "SELECT telegram_id from users"
+select_users_id = "SELECT telegram_id FROM users"
 
-select_events = "SELECT date, description from events"
+select_events = "SELECT date, description FROM events"
+
+
+def select_certain_event(date: str) -> str:
+    return f"SELECT date, description FROM events WHERE iso_date='{date}'"

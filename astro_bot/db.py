@@ -3,6 +3,7 @@ import sqlite3
 from sqlite3 import Error
 
 import queries
+from config import DB
 
 
 def create_connection(db):
@@ -46,12 +47,31 @@ def execute_read_query(
         return result
 
 
+async def write_to_db(query: str, data: tuple) -> None:
+    conn = create_connection(DB)
+    if conn:
+        execute_query(conn, query, data)
+        conn.close()
+
+
+async def read_from_db(query: str, count) -> list | None:
+    conn = create_connection(DB)
+    data = None
+    if conn:
+        data = execute_read_query(conn, query, count)
+        conn.close()
+
+    return data
+
+
 def main() -> None:
     database = r"astrobase.db"
 
     conn = create_connection(database)
     if conn:
-        print(execute_read_query(conn, queries.select_events, -7))
+        print(
+            execute_read_query(conn, queries.select_certain_event("2023-04-10"), None)
+        )
 
 
 if __name__ == "__main__":

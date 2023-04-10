@@ -11,12 +11,11 @@ user_days_counter = {}
 
 async def make_msg_with_one_day(days_count: int) -> str:
     events = await get_events(-7)
-    msg = NOTHING_NEWS_FOUND
     if events:
-        _, event = events
-        msg = MESSAGE_WITH_EVENT(event)
-
-    return msg
+        date, event = events[-(days_count)]
+        return MESSAGE_WITH_EVENT(date, event)
+    else:
+        return NOTHING_NEWS_FOUND
 
 
 async def get_week_msg_text(message: types.Message) -> None:

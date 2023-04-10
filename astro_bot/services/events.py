@@ -1,29 +1,10 @@
 """Reading and writing data from/to db"""
 
-import json
-
 import db
 import queries
-from config import BOOFER_FILE, EVENTS, DB
+from config import BOOFER_FILE, DB
 from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
-
-
-async def write_to_db(query: str, data: tuple) -> None:
-    conn = db.create_connection(DB)
-    if conn:
-        db.execute_query(conn, query, data)
-        conn.close()
-
-
-async def read_from_db(query: str, count) -> list | None:
-    conn = db.create_connection(DB)
-    data = None
-    if conn:
-        data = db.execute_read_query(conn, query, count)
-        conn.close()
-
-    return data
 
 
 async def get_data_dict() -> dict:
@@ -36,9 +17,12 @@ async def get_data_dict() -> dict:
     return make_events_dict(content_list)
 
 
-async def get_events(count=None) -> list | None:
-    events = await read_from_db(queries.select_events, count)
-    return events
+async def get_events(count=None, date=None) -> list | None:
+    if date:
+        print(queries.select_certain_event(date))
+        return await db.read_from_db(queries.select_certain_event(date), count)
+    else:
+        return await db.read_from_db(queries.select_events, count)
 
 
 async def db_init() -> None:
@@ -50,25 +34,14 @@ async def db_init() -> None:
 
     dates = await get_data_dict()
     for date in dates:
-        await write_to_db(
+        await db.write_to_db(
             queries.create_event_ins, (date,) + tuple(dates[date].values())
         )
 
 
-async def check_new_events() -> dict | None:
-    pass
-#     events_dict = await read_from_db(EVENTS)
-#
+# async def check_new_events() -> dict | None:
 #     dates = await get_data_dict()
-#
-#     if dates:
-#         new_events = {date: dates[date] for date in dates if date not in events_dict}
-#         events_dict.update(new_events)
-#
-#         # await write_to_db(events_dict)
-#
-#         return new_events
-
-
-async def add_user(user: dict) -> None:
-    await write_to_db(queries.create_user_ins, tuple(user.values()))
+#     for date in dates:
+#         await write_to_db(
+#             queries.create_event_ins, (date,) + tuple(dates[date].values())
+#         )
