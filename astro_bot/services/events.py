@@ -19,7 +19,6 @@ async def get_data_dict() -> dict:
 
 async def get_events(count=None, date=None) -> list | None:
     if date:
-        print(queries.select_certain_event(date))
         return await db.read_from_db(queries.select_certain_event(date), count)
     else:
         return await db.read_from_db(queries.select_events, count)
@@ -37,11 +36,3 @@ async def db_init() -> None:
         await db.write_to_db(
             queries.create_event_ins, (date,) + tuple(dates[date].values())
         )
-
-
-# async def check_new_events() -> dict | None:
-#     dates = await get_data_dict()
-#     for date in dates:
-#         await write_to_db(
-#             queries.create_event_ins, (date,) + tuple(dates[date].values())
-#         )

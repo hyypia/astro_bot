@@ -3,7 +3,6 @@ from datetime import datetime
 
 from aiogram import Dispatcher, types
 
-from services.events import get_events
 from config import DATE_FORMAT
 from handlers.events import get_message_for_user
 
@@ -18,9 +17,7 @@ async def get_day(message: types.Message):
     dt_input = datetime.strptime(input_date, DATE_FORMAT)
     target_date = dt_input.date().strftime(DATE_FORMAT)
 
-    events = await get_events()
-
-    msg = get_message_for_user(target_date, events)
+    msg = await get_message_for_user(target_date)
 
     await message.reply(msg)
 
