@@ -40,6 +40,5 @@ def scrap_content_to_text() -> str:
     text = ""
     for content in contents:
         text += content.get_text().strip() + ("\n" * 2)
-    print(text)
 
     return text
