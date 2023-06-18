@@ -23,5 +23,5 @@ LOGGING_FORMAT = "%(asctime)s | (line: %(lineno)s) %(levelname)s: %(message)s"
 DATE_FORMAT = "%Y-%m-%d"
 
 # URLs
-PAGE_URL = "https://astronomy.com/observing/sky-this-week"
+PAGE_URL = "https://astronomy.com/tags/sky-this-week"
 IMAGE_OF_THE_DAY_URL = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"

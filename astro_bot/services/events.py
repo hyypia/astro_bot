@@ -1,10 +1,20 @@
 """Reading and writing data from/to db"""
 
+from dataclasses import dataclass
+
 import db
 import queries
 from config import BOOFER_FILE, DB
 from services.scraper import scrap_content_to_text
 from services.parse_data import cut_content, make_events_dict
+
+
+@dataclass
+class CelestialEvent:
+    iso_date: str
+    date: str
+    week_num: int
+    description: str
 
 
 async def get_data_dict() -> dict:

@@ -23,14 +23,12 @@ def generate_user_agents() -> dict:
 def make_req(url: str):
     try:
         response = requests.get(url, timeout=5, headers=generate_user_agents())
-        logging.warn(response.raise_for_status())
-
+        logging.warning(response.raise_for_status())
     except Timeout:
         logging.exception("The request is time out")
     except HTTPError as http_err:
         logging.exception(f"HTTP error: {http_err}")
     except Exception as err:
         logging.exception(f"Other error: {err}")
-
     else:
         return response
