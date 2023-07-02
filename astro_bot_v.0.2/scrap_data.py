@@ -30,13 +30,13 @@ def get_content(
 
 def get_link() -> str:
     links = get_content(PAGE_URL, "a", href_=re.compile("sky-this-week"))
-    return links[1].get("href")
+    return links[0].get("href")
 
 
 def get_data() -> str:
     data = ""
     link = get_link()
-    divs = get_content(link, "div", class_name="entry-content")
-    for div in divs:
-        data += div.get_text().strip() + ("\n" * 2)
+    paragraphs = get_content(link, "p")
+    for p in paragraphs:
+        data += p.get_text().strip() + ("\n" * 2)
     return data
