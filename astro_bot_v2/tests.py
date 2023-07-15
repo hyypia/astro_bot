@@ -45,7 +45,7 @@ class TestDatabase:
         conn.close()
 
     # Insert data to table
-    def test_create(self, connection) -> None:
+    def test_execute_create_read(self, connection) -> None:
         date = "Friday, 14"
         description = "Sunny"
         execute_query(

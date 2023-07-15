@@ -1,20 +1,10 @@
 import sqlite3 as sq3
 from sqlite3 import Error
 
-from services.extractor import extract_data
-from db_queries import select_events, select_certain_event
-
-
-DB = "astrobase.db"
-
 
 def create_connection(db: str) -> sq3.Connection:
-    try:
-        connection = sq3.connect(db)
-    except Error as err:
-        print(f"DB Connection Error: {err}")
-    finally:
-        return connection
+    connection = sq3.connect(db)
+    return connection
 
 
 def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
@@ -23,7 +13,7 @@ def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
         cursor.execute(sql, params)
         conn.commit()
     except Error as err:
-        print(f"DB Execure Query Error: {err}")
+        print(f"DB EXECUTE Query Error: {err}")
 
 
 def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
@@ -35,7 +25,7 @@ def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
         else:
             result = cursor.fetchone()
     except Error as err:
-        print(f"DB Read Error: {err}")
+        print(f"DB READ Error: {err}")
     finally:
         return result
 
@@ -62,7 +52,3 @@ def read_from_db(db: str, sql: str, count=None) -> list | None:
         return data
     else:
         return None
-
-
-if __name__ == "__main__":
-    print(read_from_db(DB, select_certain_event("Thursday, July 20")))

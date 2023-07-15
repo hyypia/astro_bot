@@ -3,8 +3,7 @@ import requests
 from requests.exceptions import Timeout, HTTPError
 import bs4
 
-
-PAGE_URL = "https://astronomy.com/tags/sky-this-week"
+from astro_bot_v2.config import PAGE_URL
 
 
 def get_response(url: str) -> requests.Response:
