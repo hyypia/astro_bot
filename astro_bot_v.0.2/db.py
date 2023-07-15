@@ -2,15 +2,10 @@ import sqlite3 as sq3
 from sqlite3 import Error
 
 from services.extractor import extract_data
+from db_queries import select_events, select_certain_event
 
 
-DB = "users.db"
-create_users_table = """CREATE TABLE IF NOT EXISTS users (
-    telegram_id BIGINT PRIMARY KEY,
-    user_name TEXT NOT NULL,
-    name TEXT,
-    timezone TEXT NOT NULL
-    )"""
+DB = "astrobase.db"
 
 
 def create_connection(db: str) -> sq3.Connection:
@@ -22,20 +17,19 @@ def create_connection(db: str) -> sq3.Connection:
         return connection
 
 
-def execute_query(conn: sq3.Connection, query: str, params=()) -> None:
+def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
     cursor = conn.cursor()
-    # args = (query, *data)
     try:
-        cursor.execute(query, params)
+        cursor.execute(sql, params)
         conn.commit()
     except Error as err:
-        print(f"DB Query Error: {err}")
+        print(f"DB Execure Query Error: {err}")
 
 
-def execute_read(conn: sq3.Connection, query: str, count=None) -> list | tuple:
+def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
     cursor = conn.cursor()
     try:
-        cursor.execute(query)
+        cursor.execute(sql)
         if count:
             result = cursor.fetchmany(count)
         else:
@@ -46,19 +40,29 @@ def execute_read(conn: sq3.Connection, query: str, count=None) -> list | tuple:
         return result
 
 
-def db_init() -> None:
-    conn = create_connection(DB)
+def db_init(db: str, sql: str) -> None:
+    conn = create_connection(db)
     if conn:
-        execute_query(conn, create_users_table)
-        print("DB init successfylly")
+        execute_query(conn, sql)
+        print("DB inited successfylly")
 
 
-def write_to_db(query: str, data) -> None:
-    conn = create_connection(DB)
+def write_into_db(db: str, sql: str, data: tuple) -> None:
+    conn = create_connection(db)
     if conn:
-        execute_query(conn, query)
+        execute_query(conn, sql, data)
         conn.close()
 
 
+def read_from_db(db: str, sql: str, count=None) -> list | None:
+    conn = create_connection(db)
+    if conn:
+        data = execute_read(conn, sql, count)
+        conn.close()
+        return data
+    else:
+        return None
+
+
 if __name__ == "__main__":
-    db_init()
+    print(read_from_db(DB, select_certain_event("Thursday, July 20")))
