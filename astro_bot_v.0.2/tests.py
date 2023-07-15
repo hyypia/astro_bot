@@ -5,6 +5,8 @@ import sqlite3 as sq3
 
 import config
 from services import scrap_data, parse_data
+from db import create_connection, execute_query, execute_read
+import db_queries as q
 
 
 class TestScraper:
@@ -34,18 +36,11 @@ class TestParser:
         assert type(data_dict) is dict and len(data_dict) == 8
 
 
-class TestDatabaseCRUD:
+class TestDatabase:
     @pytest.fixture(scope="module")
     def connection(self) -> None:
-        conn = sq3.connect(":memory:")
-        cursor = conn.cursor()
-        cursor.execute(
-            """CREATE TABLE IF NOT EXISTS 
-            events (
-            date TEXT NOT NULL PRIMARY KEY,
-            description TEXT
-        )"""
-        )
+        conn = create_connection(":memory:")
+        execute_query(conn, q.create_events_table)
         yield conn
         conn.close()
 
@@ -53,17 +48,12 @@ class TestDatabaseCRUD:
     def test_create(self, connection) -> None:
         date = "Friday, 14"
         description = "Sunny"
-        conn = connection
-        cursor = conn.cursor()
-        cursor.execute(
-            """INSERT INTO events (date, description)
-                       VALUES (?, ?)""",
+        execute_query(
+            connection,
+            q.create_event_ins,
             (date, description),
-        )
-        conn.commit()
-        # Checking that data was inserted successfully
-        cursor.execute("SELECT * FROM events WHERE date=?", (date,))
-        result = cursor.fetchone()
+        )  # Checking that data was inserted successfully
+        result = execute_read(connection, q.select_certain_event(date), None)
         assert result is not None
         assert result[0] == date
         assert result[1] == description
