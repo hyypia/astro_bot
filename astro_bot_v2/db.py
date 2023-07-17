@@ -13,7 +13,7 @@ def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
         cursor.execute(sql, params)
         conn.commit()
     except Error as err:
-        print(f"DB EXECUTE Query Error: {err}")
+        print(f"DB EXECUTE {sql} Error: {err}")
 
 
 def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:

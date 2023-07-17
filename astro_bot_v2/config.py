@@ -19,6 +19,10 @@ DB = os.path.join(BASE_PATH, os.getenv("DB", ""))
 LOGGING_FORMAT = "%(asctime)s | (line: %(lineno)s) %(levelname)s: %(message)s"
 DATE_FORMAT = "%Y-%m-%d"
 
+# Logging configuration
+LOGGING_FILE = "astrobot.log"
+LOGGING_MODE = "w"
+
 # URLs
 PAGE_URL = "https://astronomy.com/tags/sky-this-week"
 IMAGE_OF_THE_DAY_URL = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"
