@@ -1,4 +1,4 @@
-2023-07-17 17:56:04,908 | (line: 18) INFO: Start application
-2023-07-17 17:56:05,004 | (line: 358) INFO: Start polling.
-2023-07-17 18:57:09,085 | (line: 405) WARNING: Polling is stopped.
-2023-07-17 18:57:09,088 | (line: 34) INFO: Application closed
+2023-07-17 19:47:50,220 | (line: 18) INFO: Start application
+2023-07-17 19:47:50,312 | (line: 358) INFO: Start polling.
+2023-07-17 19:48:33,323 | (line: 405) WARNING: Polling is stopped.
+2023-07-17 19:48:33,325 | (line: 35) INFO: Application closed
