@@ -1,5 +1,5 @@
-import scrap_data as sd
-import parse_data as pd
+import services.scrap_data as sd
+import services.parse_data as pd
 
 
 def extract_data() -> dict:

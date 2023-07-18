@@ -3,7 +3,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 
 from config import TOKEN, LOGGING_FORMAT, LOGGING_FILE, LOGGING_MODE
-from handlers import greeting, start, help_
+from handlers import greeting, start, help_, week, today, yesterday, tomorrow
 
 
 logging.basicConfig(
@@ -22,6 +22,10 @@ async def main() -> None:
     greeting.register_handler_start(dp)
     start.register_handler_start(dp)
     help_.register_handler_help(dp)
+    week.register_handler_week(dp)
+    today.register_handler_today(dp)
+    yesterday.register_handler_yesterday(dp)
+    tomorrow.register_handler_tomorrow(dp)
 
     await dp.start_polling()
 

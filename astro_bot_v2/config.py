@@ -17,7 +17,7 @@ DB = os.path.join(BASE_PATH, os.getenv("DB", ""))
 
 # Formats
 LOGGING_FORMAT = "%(asctime)s | (line: %(lineno)s) %(levelname)s: %(message)s"
-DATE_FORMAT = "%Y-%m-%d"
+DATE_FORMAT = "%A, %B %d"
 
 # Logging configuration
 LOGGING_FILE = "astrobot.log"

@@ -47,7 +47,7 @@ NOTHING_NEWS_FOUND = "No events found..."
 
 
 def MESSAGE_WITH_EVENT(date, description) -> str:
-    return f"{hbold(date)}\n{description}"
+    return f"{hbold(date)}\n\n{description}"
 
 
 def MESSAGE_WITH_IMAGE(res_dict: dict) -> tuple:

@@ -1,7 +1,11 @@
-from extractor import extract_data
-from db import write_into_db, read_from_db
-from config import DB
-from db_queries import create_event_ins, select_certain_event, select_events
+from services.extractor import extract_data
+from astro_bot_v2.db import write_into_db, read_from_db
+from astro_bot_v2.config import DB
+from astro_bot_v2.db_queries import (
+    create_event_ins,
+    select_certain_event,
+    select_events,
+)
 
 
 def write_events() -> None:
