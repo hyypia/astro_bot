@@ -31,10 +31,17 @@ async def update_week_msg_text(message: types.Message, day_num: int) -> None:
 async def callbacks_counter(call: types.CallbackQuery) -> None:
     days_counter = user_days_counter.get(call.from_user.id, 7)
     action = call.data.split("_")[1]
-    if action == "previous":
+
+    if action == "previous" and days_counter < 7:
         user_days_counter[call.from_user.id] = days_counter + 1
         await update_week_msg_text(call.message, days_counter + 1)
+    elif action == "previous" and days_counter == 7:
+        user_days_counter[call.from_user.id] = days_counter = 0
+        await update_week_msg_text(call.message, days_counter)
 
+    elif action == "next" and days_counter == 0:
+        user_days_counter[call.from_user.id] = days_counter = 7
+        await update_week_msg_text(call.message, days_counter)
     elif action == "next":
         user_days_counter[call.from_user.id] = days_counter - 1
         await update_week_msg_text(call.message, days_counter - 1)

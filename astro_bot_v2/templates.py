@@ -25,8 +25,8 @@ START_MESSAGE = f"""You can send me commands (press keys):
 {hbold("Tomorrow")} - get event for tomorrow;
 {hbold("Image of the day")} - for get image of the day from NASA.
 
-You can send me date in {hbold("MM-DD")} format for getting celestial event \
-for certain date.
+You can send me date in {hbold("Month DD")} (e.g. 'July 15') format for \
+getting celestial event for specific date.
 """
 
 HELP_MESSAGE = f"""{hbold("Help")} - get message with commands list;
@@ -37,8 +37,8 @@ HELP_MESSAGE = f"""{hbold("Help")} - get message with commands list;
 {hbold("Tomorrow")} - get event for tomorrow;
 {hbold("Image of the day")} - for get image of the day from NASA.
 
-You can send me date in {hbold("MM-DD")} format for getting celestial event \
-for certain date.
+You can send me date in {hbold("Month DD")} (e.g. 'July 15') format for \
+getting celestial event for specific date.
 """
 
 SCRAPING_ERROR_MESSAGE = "No content found."
@@ -46,7 +46,7 @@ ERROR_MESSAGE = "Something went wrong. Please, try later."
 NOTHING_NEWS_FOUND = "No events found..."
 
 
-def MESSAGE_WITH_EVENT(date, description) -> str:
+def MESSAGE_WITH_EVENT(date: str, description: str) -> str:
     return f"{hbold(date)}\n\n{description}"
 
 
