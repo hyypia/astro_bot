@@ -1,4 +1,6 @@
-2023-07-18 19:21:40,057 | (line: 27) INFO: Start application
-2023-07-18 19:21:40,148 | (line: 358) INFO: Start polling.
-2023-07-18 19:22:43,386 | (line: 405) WARNING: Polling is stopped.
-2023-07-18 19:22:43,389 | (line: 49) INFO: Application closed
+2023-07-19 18:03:48,779 | (line: 28) INFO: Start application
+2023-07-19 18:03:48,871 | (line: 358) INFO: Start polling.
+2023-07-19 18:13:59,293 | (line: 16) ERROR: UNIQUE constraint failed: events.date
+2023-07-19 18:24:03,320 | (line: 16) ERROR: UNIQUE constraint failed: events.date
+2023-07-19 18:30:31,447 | (line: 405) WARNING: Polling is stopped.
+2023-07-19 18:30:31,449 | (line: 53) INFO: Application closed

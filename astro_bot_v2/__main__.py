@@ -12,6 +12,7 @@ from handlers import (
     yesterday,
     tomorrow,
     specific_date,
+    autosend_events,
 )
 
 
@@ -36,6 +37,9 @@ async def main() -> None:
     yesterday.register_handler_yesterday(dp)
     tomorrow.register_handler_tomorrow(dp)
     specific_date.register_handler_specific_day(dp)
+
+    loop = asyncio.get_event_loop()
+    loop.create_task(autosend_events.get_new_events_every_week(bot))
 
     await dp.start_polling()
 

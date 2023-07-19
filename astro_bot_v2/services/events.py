@@ -11,7 +11,7 @@ from astro_bot_v2.db_queries import (
 def write_events() -> None:
     dates = extract_data()
     for date in dates:
-        write_into_db(DB, create_event_ins, tuple(date, dates[date]))
+        write_into_db(DB, create_event_ins, tuple([date, dates[date]]))
 
 
 def get_events(date=None, count=None) -> list | None:

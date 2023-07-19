@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
 from services.events import get_events
@@ -18,9 +18,14 @@ async def make_msg_with_one_day(days_count: int) -> str:
         return NOTHING_NEWS_FOUND
 
 
-async def get_week_msg_text(message: types.Message) -> None:
+async def get_week_msg_text(
+    bot: Bot = None, user_id: int = None, message: types.Message = None
+) -> None:
     msg = await make_msg_with_one_day(7)
-    await message.answer(msg, reply_markup=get_inline_week_keyboard())
+    if message:
+        await message.answer(msg, reply_markup=get_inline_week_keyboard())
+    if bot:
+        await bot.send_message(user_id, msg, reply_markup=get_inline_week_keyboard())
 
 
 async def update_week_msg_text(message: types.Message, day_num: int) -> None:
