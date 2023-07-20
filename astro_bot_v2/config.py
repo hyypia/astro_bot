@@ -26,3 +26,7 @@ LOGGING_MODE = "w"
 # URLs
 PAGE_URL = "https://astronomy.com/tags/sky-this-week"
 IMAGE_OF_THE_DAY_URL = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"
+
+# Scheduler
+SATURDAY = 5
+SECONDS_PER_DAY = 86400

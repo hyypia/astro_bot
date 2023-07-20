@@ -3,9 +3,7 @@
 __pycache__/
 services/__pycache__/
 venv/
-events_dict.json
-user_agents.txt
-astro_bot/raw_data.txt
-astro_bot.log
-users.json
-astrobase.db
+astro_bot/
+astro_bot_v2/user_agents.txt
+astro_bot_v2/astro_bot.log
+astro_bot_v2/astrobase.db

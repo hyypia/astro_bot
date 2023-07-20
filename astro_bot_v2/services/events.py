@@ -1,4 +1,4 @@
-from services.extractor import extract_data
+from astro_bot_v2.services.extractor import extract_data
 from astro_bot_v2.db import write_into_db, read_from_db
 from astro_bot_v2.config import DB
 from astro_bot_v2.db_queries import (

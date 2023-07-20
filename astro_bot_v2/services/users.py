@@ -1,6 +1,6 @@
-from db import write_into_db, read_from_db
-from db_queries import create_user_ins, select_users_id
-from config import DB
+from astro_bot_v2.db import write_into_db, read_from_db
+from astro_bot_v2.db_queries import create_user_ins, select_users_id
+from astro_bot_v2.config import DB
 
 
 def add_user(user: dict) -> None:

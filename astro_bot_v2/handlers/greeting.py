@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, types
 
-from templates import GREETING_MESSAGE
-from keyboards.reply_keyboard import location_kayboard
+from astro_bot_v2.templates import GREETING_MESSAGE
+from astro_bot_v2.keyboards.reply_keyboard import location_kayboard
 
 
 async def greeting(message: types.Message) -> None:

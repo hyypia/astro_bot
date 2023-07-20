@@ -2,8 +2,8 @@ import logging
 import asyncio
 from aiogram import Bot, Dispatcher, types
 
-from config import TOKEN, LOGGING_FORMAT, LOGGING_FILE, LOGGING_MODE
-from handlers import (
+from astro_bot_v2.config import TOKEN, LOGGING_FORMAT, LOGGING_FILE, LOGGING_MODE
+from astro_bot_v2.handlers import (
     greeting,
     start,
     help_,
@@ -39,7 +39,7 @@ async def main() -> None:
     specific_date.register_handler_specific_day(dp)
 
     loop = asyncio.get_event_loop()
-    loop.create_task(autosend_events.get_new_events_every_week(bot))
+    loop.create_task(autosend_events.scheduler(bot))
 
     await dp.start_polling()
 

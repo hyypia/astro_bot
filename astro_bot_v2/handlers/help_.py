@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
-from templates import HELP_MESSAGE
+from astro_bot_v2.templates import HELP_MESSAGE
 
 
 async def help_(message: types.Message) -> None:

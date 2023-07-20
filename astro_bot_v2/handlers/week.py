@@ -1,9 +1,9 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
-from services.events import get_events
-from templates import MESSAGE_WITH_EVENT, NOTHING_NEWS_FOUND
-from keyboards.inline_keyboard import get_inline_week_keyboard
+from astro_bot_v2.services.events import get_events
+from astro_bot_v2.templates import MESSAGE_WITH_EVENT, NOTHING_NEWS_FOUND
+from astro_bot_v2.keyboards.inline_keyboard import get_inline_week_keyboard
 
 
 user_days_counter = {}

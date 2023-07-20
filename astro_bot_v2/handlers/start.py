@@ -2,9 +2,9 @@ from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 from timezonefinder import TimezoneFinder
 
-from services.users import add_user
-from templates import START_MESSAGE
-from keyboards.reply_keyboard import main_keyboard
+from astro_bot_v2.services.users import add_user
+from astro_bot_v2.templates import START_MESSAGE
+from astro_bot_v2.keyboards.reply_keyboard import main_keyboard
 
 
 async def start(message: types.Message) -> None:

@@ -3,7 +3,7 @@ from datetime import datetime
 
 from aiogram import Dispatcher, types
 
-from handlers.get_specific_date_event import get_message_for_user
+from astro_bot_v2.handlers.get_specific_date_event import get_message_for_user
 
 
 async def get_day(message: types.Message) -> None:
