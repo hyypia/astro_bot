@@ -1,5 +1,5 @@
-from astro_bot_v2.services.events import get_events
-from astro_bot_v2.templates import MESSAGE_WITH_EVENT, NOTHING_NEWS_FOUND
+from astro_bot.services.events import get_events
+from astro_bot.templates import MESSAGE_WITH_EVENT, NOTHING_NEWS_FOUND
 
 
 def get_message_for_user(date: str) -> str:

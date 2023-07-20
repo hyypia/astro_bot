@@ -1,19 +1,35 @@
 import re
 import requests
+import random
+import logging
 from requests.exceptions import Timeout, HTTPError
 import bs4
 
-from astro_bot_v2.config import PAGE_URL
+from astro_bot.config import PAGE_URL, AGENTS
+
+
+def generate_user_agents() -> dict:
+    headers = {}
+    try:
+        with open(AGENTS, "rt") as file:
+            user_agents = file.read().splitlines()
+    except FileNotFoundError as fnf_err:
+        logging.exception(fnf_err)
+    else:
+        random_user_agent = random.choice(user_agents)
+        headers = {"user-agent": random_user_agent}
+
+    return headers
 
 
 def get_response(url: str) -> requests.Response:
     try:
-        r = requests.get(url)
-        print(r.status_code)
+        r = requests.get(url, headers=generate_user_agents())
+        logging.info(r.status_code)
     except Timeout:
-        print("The request is TIME OUT")
+        logging.exception("The request is TIME OUT")
     except HTTPError as http_err:
-        print(f"HTTP error: {http_err}")
+        logging.exception(f"HTTP error: {http_err}")
     else:
         return r
 

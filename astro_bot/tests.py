@@ -1,24 +1,59 @@
-import unittest
+import pytest
 import requests
+from bs4 import element
+import sqlite3 as sq3
 
-from astro_bot.config import PAGE_URL
-from astro_bot.services.scraper import get_url, scrap_content_to_text
-
-
-class TestScraper(unittest.TestCase):
-    def test_getting_url(self) -> None:
-        response = requests.get(PAGE_URL)
-        self.assertEqual(response.status_code, 200)
-        url = get_url()
-        self.assertEqual(
-            url,
-            "https://www.astronomy.com/observing/the-sky-this-week-welcome-summer-2/",
-        )
-
-    def test_scraping_content_page_to_text(self) -> None:
-        content = scrap_content_to_text()
-        self.assertEqual(content, "")
+import config
+from services import scrap_data, parse_data
+from db import create_connection, execute_query, execute_read
+import db_queries as q
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestScraper:
+    def test_page_response(self) -> None:
+        res = scrap_data.get_response(config.PAGE_URL)
+        assert res.status_code == requests.codes.ok, "Bad response"
+
+    def test_get_page_content(self) -> None:
+        content = scrap_data.get_content(config.PAGE_URL, "a")
+        assert type(content) is element.ResultSet
+
+    def test_get_link_for_last_week(self) -> None:
+        link = scrap_data.get_link()
+        assert link.startswith("https://www.astronomy.com/observing/the-sky-this-week-")
+
+    def test_get_data_for_week(self) -> None:
+        data = scrap_data.get_data()
+        assert type(data) is str
+        assert len(data) > 1000
+
+
+# @pytest.mark.skip
+class TestParser:
+    def test_parse_scraped_data_to_dict(self) -> None:
+        data = scrap_data.get_data()
+        data_dict = parse_data.parse_scraped_data_to_dict(data)
+        assert type(data_dict) is dict and len(data_dict) == 8
+
+
+class TestDatabase:
+    @pytest.fixture(scope="module")
+    def connection(self) -> None:
+        conn = create_connection(":memory:")
+        execute_query(conn, q.create_events_table)
+        yield conn
+        conn.close()
+
+    # Insert data to table
+    def test_execute_create_read(self, connection) -> None:
+        date = "Friday, 14"
+        description = "Sunny"
+        execute_query(
+            connection,
+            q.create_event_ins,
+            (date, description),
+        )  # Checking that data was inserted successfully
+        result = execute_read(connection, q.select_certain_event(date), None)
+        assert result is not None
+        assert result[0] == date
+        assert result[1] == description

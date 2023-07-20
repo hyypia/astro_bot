@@ -1,58 +1,55 @@
-import logging
-import sqlite3
+import sqlite3 as sq3
 from sqlite3 import Error
 
-from config import DB
+
+def create_connection(db: str) -> sq3.Connection:
+    connection = sq3.connect(db)
+    return connection
 
 
-def create_connection(db):
-    connection = None
+def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
+    cursor = conn.cursor()
     try:
-        connection = sqlite3.connect(db)
-    except Error as e:
-        logging.error(e)
-    finally:
-        return connection
+        cursor.execute(sql, params)
+        conn.commit()
+    except Error as err:
+        print(f"DB EXECUTE Query Error: {err}")
+        raise
 
 
-def execute_query(connection: sqlite3.Connection, query: str, params=()) -> None:
-    curs = connection.cursor()
+def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
+    cursor = conn.cursor()
     try:
-        curs.execute(query, params)
-        connection.commit()
-    except Error as e:
-        logging.error(e)
-
-
-def execute_read_query(
-    connection: sqlite3.Connection, query: str, count
-) -> list | None:
-    cursor = connection.cursor()
-    result = None
-    try:
-        cursor.execute(query)
+        cursor.execute(sql)
         if count is None:
             result = cursor.fetchall()
         else:
             result = cursor.fetchmany(count)
-    except Error as e:
-        logging.error(e)
+    except Error as err:
+        print(f"DB READ Error: {err}")
     finally:
         return result
 
 
-async def write_to_db(query: str, data: tuple) -> None:
-    conn = create_connection(DB)
+def db_init(db: str, sql: str) -> None:
+    conn = create_connection(db)
     if conn:
-        execute_query(conn, query, data)
+        execute_query(conn, sql)
+        print("DB inited successfylly")
+
+
+def write_into_db(db: str, sql: str, data: tuple) -> None:
+    conn = create_connection(db)
+    if conn:
+        execute_query(conn, sql, data)
         conn.close()
 
 
-async def read_from_db(query: str, count) -> list | None:
-    conn = create_connection(DB)
-    data = None
+def read_from_db(db: str, sql: str, count=None) -> list | None:
+    conn = create_connection(db)
     if conn:
-        data = execute_read_query(conn, query, count)
+        data = execute_read(conn, sql, count)
         conn.close()
-
-    return data
+        return data
+    else:
+        return None

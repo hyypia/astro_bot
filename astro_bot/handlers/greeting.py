@@ -1,14 +1,12 @@
 from aiogram import Dispatcher, types
 
-from templates import GREETING_MESSAGE
-from services.events import db_init
-from keyboards.reply_keyboard import location_keyboard
+from astro_bot.templates import GREETING_MESSAGE
+from astro_bot.keyboards.reply_keyboard import location_kayboard
 
 
-async def greeting(message: types.Message):
-    await db_init()
-    await message.answer(GREETING_MESSAGE, reply_markup=location_keyboard())
+async def greeting(message: types.Message) -> None:
+    await message.answer(GREETING_MESSAGE, reply_markup=location_kayboard())
 
 
-def register_handler_start(dp: Dispatcher):
+def register_handler_start(dp: Dispatcher) -> None:
     dp.register_message_handler(greeting, commands=["Start", "start"])

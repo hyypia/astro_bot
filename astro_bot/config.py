@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 
+
 BASE_PATH = os.path.dirname(os.path.abspath(__name__))
 
 dotenv_path = os.path.join(BASE_PATH, ".env")
@@ -13,15 +14,22 @@ NASA_TOKEN = os.getenv("NASA_IMAGE_OF_THE_DAY_TOKEN", "")
 
 # DBs
 DB = os.path.join(BASE_PATH, os.getenv("DB", ""))
-USERS = os.path.join(BASE_PATH, os.getenv("USERS_DB", ""))
-EVENTS = os.path.join(BASE_PATH, os.getenv("EVENTS_DB", ""))
-AGENTS = os.path.join(BASE_PATH, os.getenv("AGENTS_DB", ""))
-BOOFER_FILE = os.path.join(BASE_PATH, os.getenv("FILE_NAME", ""))
+
+# User agents file 
+AGENTS = "user_agents.txt"
 
 # Formats
 LOGGING_FORMAT = "%(asctime)s | (line: %(lineno)s) %(levelname)s: %(message)s"
-DATE_FORMAT = "%Y-%m-%d"
+DATE_FORMAT = "%A, %B %d"
+
+# Logging configuration
+LOGGING_FILE = "astrobot.log"
+LOGGING_MODE = "w"
 
 # URLs
 PAGE_URL = "https://astronomy.com/tags/sky-this-week"
 IMAGE_OF_THE_DAY_URL = f"https://api.nasa.gov/planetary/apod?api_key={NASA_TOKEN}"
+
+# Scheduler
+SATURDAY = 5
+SECONDS_PER_DAY = 86400

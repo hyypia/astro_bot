@@ -1,5 +1,5 @@
-import astro_bot_v2.services.scrap_data as sd
-import astro_bot_v2.services.parse_data as pd
+import astro_bot.services.scrap_data as sd
+import astro_bot.services.parse_data as pd
 
 
 def extract_data() -> dict:

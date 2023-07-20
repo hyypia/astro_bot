@@ -2,8 +2,8 @@ import logging
 import asyncio
 from aiogram import Bot, Dispatcher, types
 
-from astro_bot_v2.config import TOKEN, LOGGING_FORMAT, LOGGING_FILE, LOGGING_MODE
-from astro_bot_v2.handlers import (
+from astro_bot.config import TOKEN, LOGGING_FORMAT, LOGGING_FILE, LOGGING_MODE
+from astro_bot.handlers import (
     greeting,
     start,
     help_,

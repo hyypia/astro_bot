@@ -3,8 +3,8 @@ from datetime import date, timedelta
 from aiogram import Dispatcher, types
 from aiogram.dispatcher.filters import Text
 
-from astro_bot_v2.config import DATE_FORMAT
-from astro_bot_v2.handlers.get_specific_date_event import get_message_for_user
+from astro_bot.config import DATE_FORMAT
+from astro_bot.handlers.get_specific_date_event import get_message_for_user
 
 
 async def get_tomorrow(message: types.Message) -> None:

@@ -4,10 +4,10 @@ from datetime import date
 from sqlite3 import Error
 from aiogram import Bot
 
-from astro_bot_v2.config import SATURDAY, SECONDS_PER_DAY
-from astro_bot_v2.services.events import write_events
-from astro_bot_v2.services.users import get_users_ids
-from astro_bot_v2.handlers.week import get_week_msg_text
+from astro_bot.config import SATURDAY, SECONDS_PER_DAY
+from astro_bot.services.events import write_events
+from astro_bot.services.users import get_users_ids
+from astro_bot.handlers.week import get_week_msg_text
 
 
 async def get_new_events_every_saturday(bot: Bot) -> None:
