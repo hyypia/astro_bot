@@ -4,7 +4,7 @@ from astro_bot.config import DB
 from astro_bot.db_queries import (
     create_event_ins,
     select_certain_event,
-    select_events,
+    select_last_new_events,
 )
 
 
@@ -17,5 +17,5 @@ def write_events() -> None:
 def get_events(date=None, count=None) -> list | None:
     if date:
         return read_from_db(DB, select_certain_event(date))
-    else:
-        return read_from_db(DB, select_events, count)
+    if count:
+        return read_from_db(DB, select_last_new_events(count))

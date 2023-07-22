@@ -1,3 +1,4 @@
+import logging
 import sqlite3 as sq3
 from sqlite3 import Error
 
@@ -13,8 +14,7 @@ def execute_query(conn: sq3.Connection, sql: str, params=()) -> None:
         cursor.execute(sql, params)
         conn.commit()
     except Error as err:
-        print(f"DB EXECUTE Query Error: {err}")
-        raise
+        logging.exception(f"DB EXECUTE Query Error: {err}")
 
 
 def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
@@ -26,7 +26,7 @@ def execute_read(conn: sq3.Connection, sql: str, count) -> list | tuple:
         else:
             result = cursor.fetchmany(count)
     except Error as err:
-        print(f"DB READ Error: {err}")
+        logging.exception(f"DB READ Error: {err}")
     finally:
         return result
 
@@ -35,7 +35,7 @@ def db_init(db: str, sql: str) -> None:
     conn = create_connection(db)
     if conn:
         execute_query(conn, sql)
-        print("DB inited successfylly")
+        logging.exception("DB inited successfylly")
 
 
 def write_into_db(db: str, sql: str, data: tuple) -> None:
