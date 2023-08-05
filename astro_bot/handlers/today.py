@@ -1,3 +1,4 @@
+import re
 from datetime import date
 
 from aiogram import Dispatcher, types
@@ -8,7 +9,7 @@ from astro_bot.handlers.get_specific_date_event import get_message_for_user
 
 
 async def get_today(message: types.Message) -> None:
-    today = date.today().strftime(DATE_FORMAT)
+    today = re.sub(r"\b0(\d)\b", r"\1", date.today().strftime(DATE_FORMAT))
     msg = get_message_for_user(today)
 
     await message.reply(msg)
